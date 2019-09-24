@@ -63,6 +63,7 @@ function toggleGood(pup) {
 };
 
 function toggle(pup) {
+    const filterButton = document.getElementById
     fetch(pupsUrl + '/' + pup.id, {
         method: "PATCH",
         headers: {
@@ -72,30 +73,30 @@ function toggle(pup) {
         body: JSON.stringify({ "isGoodDog": !pup.isGoodDog })
     })
     .then(resp => resp.json())
-    .then(pup => goodDog(pup));
+    .then(pup => goodDog(pup))
+    .then(() => filter(filterButton));
 };
 
 function filterGoodDog() {
-    const button = document.getElementById('good-dog-filter');
-    button.addEventListener('click', () => toggleFilterBtn(button)); 
+    const filterButton = document.getElementById('good-dog-filter');
+    filterButton.addEventListener('click', () => toggleFilterBtn(filterButton)); 
 };
 
-function toggleFilterBtn(button) {
-    if (button.textContent === "Filter good dogs: OFF") {
-        button.textContent = "Filter good dogs: ON"
+function toggleFilterBtn(filterButton) {
+    if ( filterButton.textContent === "Filter good dogs: OFF") {
+        filterButton.textContent = "Filter good dogs: ON"
     } else {
-        button.textContent = "Filter good dogs: OFF"
+        filterButton.textContent = "Filter good dogs: OFF"
     }
-    filter(button);
+    filter(filterButton);
 };
 
-function filter(button) {
-    
+function filter(filterButton) {
     fetch(pupsUrl)
         .then(resp => resp.json())
         .then(pups => {
             pups.forEach( pup => {
-                if (button.textContent === "Filter good dogs: OFF") {
+                if (filterButton.textContent === "Filter good dogs: OFF") {
                     const span = document.getElementById(`span${pup.id}`)
                     span.style.display = ""
                 } else {
