@@ -24,7 +24,6 @@ function renderPups(pups) {
 };
 
 function show(pup) {
-    console.log("here")
     const dogInfo = document.querySelector('#dog-info');
     dogInfo.innerHTML = "";
     const div = document.createElement("div");
@@ -63,7 +62,6 @@ function toggleGood(pup) {
 };
 
 function toggle(pup) {
-    const filterButton = document.getElementById
     fetch(pupsUrl + '/' + pup.id, {
         method: "PATCH",
         headers: {
@@ -74,7 +72,12 @@ function toggle(pup) {
     })
     .then(resp => resp.json())
     .then(pup => goodDog(pup))
-    .then(() => filter(filterButton));
+    .then(() => {
+        const filterButton = document.getElementById('good-dog-filter');
+        if ( filterButton.textContent === "Filter good dogs: ON" ) {
+            filter(filterButton);
+        }
+    })
 };
 
 function filterGoodDog() {
